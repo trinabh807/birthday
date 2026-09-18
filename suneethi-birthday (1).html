@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, Suneethi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#3B0D1F;
+    --plum:#F7E4E0;
+    --rose:#E8A6C1;
+    --berry:#D94F70;
+    --gold:#E0AE6E;
+    --ink:#F5E3E4;
+    --paper:#FBF0E4;
+    --shadow: rgba(15,4,9,0.45);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Quicksand',sans-serif;
+    overflow-x:hidden;
+    transition:background .4s ease,color .4s ease;
+  }
+  h1,h2,h3,.display{
+    font-family:'Fraunces',serif;
+    margin:0;
+    color:var(--plum);
+    font-weight:600;
+  }
+  section{
+    min-height:100vh;
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    padding:6vh 6vw;
+    overflow:hidden;
+  }
+
+  /* ---------- floating hearts background ---------- */
+  .float-field{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+  .float-item{
+    position:absolute;
+    bottom:-10%;
+    opacity:0.55;
+    animation:rise linear infinite;
+    color:var(--rose);
+    filter:drop-shadow(0 2px 6px var(--shadow));
+  }
+  @keyframes rise{
+    0%{transform:translateY(0) rotate(0deg);opacity:0;}
+    10%{opacity:0.6;}
+    90%{opacity:0.5;}
+    100%{transform:translateY(-115vh) rotate(25deg);opacity:0;}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    text-align:center;
+    flex-direction:column;
+    gap:1.4rem;
+  }
+  .hero .eyebrow{
+    font-family:'Quicksand';
+    font-weight:600;
+    letter-spacing:.02em;
+    color:var(--berry);
+    font-size:1.05rem;
+  }
+  .hero h1{
+    font-size:clamp(2.8rem, 9vw, 6.5rem);
+    line-height:1.02;
+    font-style:italic;
+  }
+  .hero .name{
+    display:block;
+    font-style:normal;
+    color:var(--berry);
+    font-size:clamp(3.2rem, 11vw, 8rem);
+  }
+  .hero p.sub{
+    max-width:38ch;
+    margin:0 auto;
+    font-size:1.15rem;
+    line-height:1.5;
+    color:var(--ink);
+    opacity:.85;
+  }
+  .scroll-hint{
+    margin-top:2.4rem;
+    font-size:.95rem;
+    opacity:.6;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:.4rem;
+  }
+  .scroll-hint span{
+    width:1px;height:34px;background:currentColor;
+    animation:hint 1.8s ease-in-out infinite;
+    transform-origin:top;
+  }
+  @keyframes hint{
+    0%,100%{transform:scaleY(1);opacity:.35;}
+    50%{transform:scaleY(1.3);opacity:.9;}
+  }
+
+  /* ---------- letter section ---------- */
+  .letter-wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:2.2rem;
+    width:100%;
+    max-width:640px;
+  }
+  .letter-wrap h2{
+    font-size:clamp(1.8rem,4vw,2.6rem);
+    text-align:center;
+  }
+  .envelope-stage{
+    perspective:1600px;
+    width:min(90vw,420px);
+    height:280px;
+    position:relative;
+  }
+  .envelope{
+    position:absolute;
+    inset:0;
+    cursor:pointer;
+  }
+  .env-body{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(160deg,var(--berry),#2B0716);
+    border-radius:10px;
+    box-shadow:0 18px 40px var(--shadow);
+  }
+  .env-body::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    border-radius:10px;
+    background:
+      linear-gradient(to bottom right, transparent 49.6%, rgba(0,0,0,.18) 50%, transparent 50.4%),
+      linear-gradient(to bottom left, transparent 49.6%, rgba(0,0,0,.18) 50%, transparent 50.4%);
+  }
+  .env-flap{
+    position:absolute;
+    top:0;left:0;right:0;
+    height:150px;
+    background:linear-gradient(160deg,var(--gold),var(--berry));
+    clip-path:polygon(0 0, 100% 0, 50% 68%);
+    transform-origin:top;
+    transition:transform 1s cubic-bezier(.7,-0.3,.3,1.3);
+    border-radius:10px 10px 0 0;
+    z-index:3;
+  }
+  .envelope.open .env-flap{transform:rotateX(180deg);}
+  .seal{
+    position:absolute;
+    top:96px;left:50%;
+    transform:translate(-50%,0);
+    width:56px;height:56px;
+    background:var(--gold);
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--paper);
+    font-size:1.5rem;
+    box-shadow:0 6px 14px rgba(0,0,0,.3);
+    z-index:4;
+    transition:opacity .4s ease, transform .4s ease;
+  }
+  .envelope.open .seal{opacity:0;transform:translate(-50%,-10px) scale(.6);}
+  .letter-card{
+    position:absolute;
+    left:6%;right:6%;
+    bottom:6%;
+    top:36%;
+    background:var(--paper);
+    border-radius:6px;
+    box-shadow:0 10px 30px var(--shadow);
+    transform:translateY(6%);
+    transition:transform .9s cubic-bezier(.2,.8,.2,1);
+    z-index:2;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:1rem;
+    text-align:center;
+  }
+  .letter-card span{
+    font-family:'Fraunces';
+    font-style:italic;
+    color:var(--berry);
+    font-size:1rem;
+    opacity:.8;
+  }
+  .envelope.open .letter-card{transform:translateY(-118%);}
+
+  .letter-full{
+    width:100%;
+    background:var(--paper);
+    border-radius:10px;
+    box-shadow:0 20px 50px var(--shadow);
+    padding:clamp(1.8rem,5vw,3.2rem);
+    display:none;
+  }
+  .letter-full.show{display:block;animation:paperIn .6s ease both;}
+  @keyframes paperIn{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+  .letter-full p{
+    font-family:'Fraunces';
+    font-size:1.12rem;
+    line-height:1.75;
+    color:#221414;
+    margin:0 0 1.1rem 0;
+    max-width:62ch;
+    opacity:0;
+    transform:translateY(10px);
+    transition:opacity .7s ease, transform .7s ease;
+  }
+  .letter-full p.revealed{opacity:1;transform:translateY(0);}
+  .letter-full p:last-child{margin-bottom:0;}
+  .signoff{text-align:right;font-style:italic;}
+
+  /* ---------- game section ---------- */
+  .game-section{
+    flex-direction:column;
+    text-align:center;
+    gap:2.4rem;
+  }
+  .game-section h2{font-size:clamp(1.7rem,5vw,2.6rem);}
+  .game-section .hint{opacity:.7;max-width:36ch;font-size:1rem;}
+  .btn-field{
+    position:relative;
+    width:min(90vw,560px);
+    height:min(46vh,320px);
+    margin-top:1rem;
+  }
+  .btn{
+    border:none;
+    border-radius:999px;
+    font-family:'Quicksand';
+    font-weight:700;
+    cursor:pointer;
+    transition:transform .25s cubic-bezier(.34,1.56,.64,1), font-size .25s ease, box-shadow .25s ease;
+  }
+  .yes-btn{
+    position:relative;
+    background:var(--berry);
+    color:#fff;
+    padding:1rem 2.6rem;
+    font-size:1.15rem;
+    box-shadow:0 10px 26px rgba(217,79,112,.4);
+    z-index:5;
+  }
+  .no-btn{
+    position:relative;
+    background:transparent;
+    color:var(--ink);
+    border:2px solid currentColor;
+    padding:.9rem 2rem;
+    font-size:1.05rem;
+    opacity:.9;
+    z-index:6;
+  }
+  .btn-field.centered{display:flex;align-items:center;justify-content:center;gap:1.6rem;}
+  .no-btn.roaming{position:fixed;transition:top .35s cubic-bezier(.34,1.56,.64,1), left .35s cubic-bezier(.34,1.56,.64,1), transform .2s ease;}
+  @keyframes wiggle{
+    0%,100%{transform:rotate(0deg);}
+    25%{transform:rotate(-8deg);}
+    75%{transform:rotate(8deg);}
+  }
+  .no-btn.wiggle{animation:wiggle .35s ease;}
+  .yes-btn.growing{position:fixed;transition:top .5s cubic-bezier(.2,.8,.2,1), left .5s cubic-bezier(.2,.8,.2,1), width .5s cubic-bezier(.2,.8,.2,1), height .5s cubic-bezier(.2,.8,.2,1), font-size .5s ease, border-radius .5s ease;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;text-align:center;}
+  .no-ran{
+    position:fixed;
+    font-family:'Fraunces';
+    font-style:italic;
+    color:var(--ink);
+    opacity:.75;
+    font-size:1rem;
+    z-index:4;
+    pointer-events:none;
+  }
+
+  /* ---------- merged love + dinner reveal ---------- */
+  .reveal-stage{display:flex;flex-direction:column;align-items:center;gap:1.2rem;}
+  .reveal-stage.hidden{display:none;}
+  .mini-ask{
+    margin-top:1rem;
+    padding-top:1.6rem;
+    border-top:1px solid rgba(245,227,228,0.16);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:1rem;
+  }
+  .mini-ask .eyebrow-small{
+    font-size:.85rem;
+    opacity:.6;
+    letter-spacing:.02em;
+  }
+  .mini-ask h3{
+    font-size:clamp(1.3rem,4vw,1.9rem);
+    font-style:italic;
+    color:var(--plum);
+  }
+
+
+  /* ---------- reveal overlay ---------- */
+  .reveal{
+    position:fixed;
+    inset:0;
+    background:radial-gradient(circle at 50% 40%, #7A2340 0%, var(--cream) 72%);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:1.2rem;
+    text-align:center;
+    z-index:50;
+    padding:2rem;
+  }
+  .reveal.show{display:flex;animation:paperIn .8s ease both;}
+  .reveal h2{
+    font-size:clamp(2.2rem,8vw,4.2rem);
+    font-style:italic;
+    color:var(--berry);
+  }
+  .reveal p{max-width:40ch;font-size:1.1rem;line-height:1.6;opacity:.85;}
+  .heart-burst{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+
+  ::selection{background:var(--rose);color:var(--plum);}
+  :focus-visible{outline:2px solid var(--berry);outline-offset:3px;}
+
+  @media (max-width:560px){
+    .btn-field{height:44vh;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="hero">
+  <div class="float-field" id="heroHearts"></div>
+  <p class="eyebrow">a small corner of the internet, just for you</p>
+  <h1>Happy Birthday<span class="name">Suneethi</span></h1>
+  <p class="sub">Twenty-something candles, one very lucky boyfriend, and a whole website made just to make you smile today.</p>
+  <div class="scroll-hint"><span></span>scroll for your letter</div>
+</section>
+
+<!-- ===================== LETTER ===================== -->
+<section id="letter">
+  <div class="letter-wrap">
+    <h2>Open when you're ready</h2>
+
+    <div class="envelope-stage">
+      <div class="envelope" id="envelope">
+        <div class="letter-card"><span>your letter is inside</span></div>
+        <div class="env-body"></div>
+        <div class="env-flap"></div>
+        <div class="seal">💌</div>
+      </div>
+    </div>
+
+    <div class="letter-full" id="letterFull">
+      <p>My dearest Suneethi,</p>
+      <p>Another year has quietly turned over, and somehow you keep managing to be my favourite part of every single one. I don't think I'll ever get used to how lucky that makes me.</p>
+      <p>You have this way of making ordinary days feel like they matter — a random Tuesday turns into something I want to remember just because you were in it. That's not a small thing. That's rare, and I notice it every time.</p>
+      <p>So today, I hope you feel exactly as loved as you make everyone around you feel. I hope the cake is too sweet, the messages don't stop coming, and that somewhere in the middle of it all, you take a second to know how proud I am of you — of who you are, and who you're still becoming.</p>
+      <p>Here's to another year of inside jokes, terrible song choices in the car, and you, being effortlessly you.</p>
+      <p class="signoff">Happy birthday, my love.<br>— always yours</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== GAME: BIRTHDAY ASK ===================== -->
+<section class="game-section" id="game">
+  <h2 id="gameTitle-birthday">One more question, just to hear you say it again</h2>
+  <p class="hint" id="gameHint-birthday">tap the button that doesn't run away</p>
+
+  <div class="btn-field centered" id="btnField-birthday">
+    <button class="btn yes-btn" id="yesBtn-birthday">Yes 🥹</button>
+    <button class="btn no-btn" id="noBtn-birthday">No</button>
+  </div>
+</section>
+
+<!-- ===================== REVEAL: LOVE MESSAGE -> DINNER ASK -> FINAL ===================== -->
+<div class="reveal" id="reveal-birthday">
+  <div class="heart-burst" id="heartBurst-birthday"></div>
+
+  <div class="reveal-stage" id="loveStage">
+    <h2>I love you, Suneethi 🖤</h2>
+    <p>knew you'd pick right eventually.</p>
+
+    <div class="mini-ask">
+      <p class="eyebrow-small" id="gameHint-date">no is not giving right now bestie</p>
+      <h3 id="gameTitle-date">dinner? 🍝</h3>
+      <div class="btn-field centered" id="btnField-date">
+        <button class="btn yes-btn" id="yesBtn-date">bet 🔥</button>
+        <button class="btn no-btn" id="noBtn-date">nah</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal-stage hidden" id="finalStage">
+    <h2>say less 🖤</h2>
+    <p>be ready at 8.</p>
+  </div>
+</div>
+
+<script>
+  // ---------- floating hearts in hero ----------
+  (function(){
+    const field = document.getElementById('heroHearts');
+    const symbols = ['♥','✿','♥'];
+    for(let i=0;i<16;i++){
+      const el = document.createElement('div');
+      el.className='float-item';
+      el.textContent = symbols[i % symbols.length];
+      el.style.left = Math.random()*100 + '%';
+      el.style.fontSize = (12 + Math.random()*22) + 'px';
+      el.style.animationDuration = (10 + Math.random()*12) + 's';
+      el.style.animationDelay = (Math.random()*10) + 's';
+      field.appendChild(el);
+    }
+  })();
+
+  // ---------- envelope open ----------
+  const envelope = document.getElementById('envelope');
+  const letterFull = document.getElementById('letterFull');
+  let opened = false;
+  envelope.addEventListener('click', () => {
+    if(opened) return;
+    opened = true;
+    envelope.classList.add('open');
+    setTimeout(() => {
+      letterFull.classList.add('show');
+      const paras = letterFull.querySelectorAll('p');
+      paras.forEach((p,i)=>{
+        setTimeout(()=>p.classList.add('revealed'), 250*i);
+      });
+      letterFull.scrollIntoView({behavior:'smooth', block:'center'});
+    }, 850);
+  });
+
+  // ---------- reusable yes/no dodge game ----------
+  function vw(){ return Math.max(document.documentElement.clientWidth, window.innerWidth||0); }
+  function vh(){ return Math.max(document.documentElement.clientHeight, window.innerHeight||0); }
+
+  function setupYesNoGame(cfg){
+    const yesBtn = document.getElementById(cfg.yesId);
+    const noBtn = document.getElementById(cfg.noId);
+    const gameHint = document.getElementById(cfg.hintId);
+    const gameTitle = document.getElementById(cfg.titleId);
+    const heartBurst = document.getElementById(cfg.burstId);
+
+    let dodges = 0;
+    const MAX_DODGES = 7;
+    const hints = cfg.hints;
+    const finalTitle = cfg.finalTitle;
+    const finalHint = cfg.finalHint;
+
+    function growYes(){
+      if(!yesBtn.classList.contains('growing')){
+        yesBtn.classList.add('growing');
+        const r = yesBtn.getBoundingClientRect();
+        yesBtn.style.left = (r.left + r.width/2) + 'px';
+        yesBtn.style.top = (r.top + r.height/2) + 'px';
+      }
+      const t = Math.min(dodges / MAX_DODGES, 1);
+      const w = 140 + t * (Math.min(vw(),vh()) * 0.9);
+      const fs = 1.15 + t * 4.5;
+      yesBtn.style.width = w + 'px';
+      yesBtn.style.height = w + 'px';
+      yesBtn.style.borderRadius = '50%';
+      yesBtn.style.fontSize = fs + 'rem';
+      yesBtn.style.left = (vw()/2) + 'px';
+      yesBtn.style.top = (vh()/2) + 'px';
+    }
+
+    function dodgeNo(e){
+      e.preventDefault();
+      dodges++;
+      gameHint.textContent = hints[Math.min(dodges, hints.length-1)];
+      growYes();
+
+      if(dodges >= MAX_DODGES){
+        noBtn.style.transition = 'opacity .5s ease, transform .5s ease';
+        noBtn.style.opacity = '0';
+        noBtn.style.transform = 'scale(.3)';
+        setTimeout(()=>{ noBtn.style.display='none'; }, 500);
+        gameTitle.textContent = finalTitle;
+        gameHint.textContent = finalHint;
+        return;
+      }
+
+      if(!noBtn.classList.contains('roaming')){
+        noBtn.classList.add('roaming');
+      }
+      const btnW = noBtn.offsetWidth || 120;
+      const btnH = noBtn.offsetHeight || 48;
+      const margin = 20;
+      const maxX = vw() - btnW - margin;
+      const maxY = vh() - btnH - margin;
+      const x = margin + Math.random() * Math.max(maxX - margin, 10);
+      const y = margin + Math.random() * Math.max(maxY - margin, 10);
+      noBtn.style.left = x + 'px';
+      noBtn.style.top = y + 'px';
+      noBtn.style.transform = 'scale(' + Math.max(1 - dodges*0.07, 0.55) + ')';
+
+      noBtn.classList.remove('wiggle');
+      void noBtn.offsetWidth; // restart animation
+      noBtn.classList.add('wiggle');
+    }
+
+    noBtn.addEventListener('mouseenter', dodgeNo);
+    noBtn.addEventListener('click', dodgeNo);
+    noBtn.addEventListener('touchstart', dodgeNo, {passive:false});
+
+    function spawnHeartBurst(){
+      heartBurst.innerHTML = '';
+      for(let i=0;i<24;i++){
+        const el = document.createElement('div');
+        el.textContent = '♥';
+        el.style.position='absolute';
+        el.style.left = (45 + Math.random()*10) + '%';
+        el.style.bottom = '-5%';
+        el.style.color = i % 2 === 0 ? 'var(--berry)' : 'var(--rose)';
+        el.style.fontSize = (14 + Math.random()*26) + 'px';
+        el.style.opacity = '0';
+        el.style.animation = `rise ${6+Math.random()*5}s ease-in forwards`;
+        el.style.animationDelay = (Math.random()*1.2)+'s';
+        heartBurst.appendChild(el);
+      }
+    }
+
+    yesBtn.addEventListener('click', () => {
+      spawnHeartBurst();
+      cfg.onYes();
+    });
+
+    window.addEventListener('resize', () => {
+      if(yesBtn.classList.contains('growing')){
+        yesBtn.style.left = (vw()/2) + 'px';
+        yesBtn.style.top = (vh()/2) + 'px';
+      }
+    });
+  }
+
+  const revealBirthday = document.getElementById('reveal-birthday');
+  const loveStage = document.getElementById('loveStage');
+  const finalStage = document.getElementById('finalStage');
+
+  setupYesNoGame({
+    yesId:'yesBtn-birthday', noId:'noBtn-birthday',
+    hintId:'gameHint-birthday', titleId:'gameTitle-birthday',
+    burstId:'heartBurst-birthday',
+    hints:[
+      "tap the button that doesn't run away",
+      "aw, come on",
+      "it's getting bigger, you know",
+      "still a no?",
+      "okay this is just funny now",
+      "no is basically hiding at this point",
+      "just say yes already 🥹"
+    ],
+    finalTitle:"no ran away for good. it's just yes now.",
+    finalHint:"go ahead, tap it 💗",
+    onYes(){
+      revealBirthday.classList.add('show');
+    }
+  });
+
+  setupYesNoGame({
+    yesId:'yesBtn-date', noId:'noBtn-date',
+    hintId:'gameHint-date', titleId:'gameTitle-date',
+    burstId:'heartBurst-birthday',
+    hints:[
+      "no is not giving right now bestie",
+      "it's giving avoidant ngl",
+      "bro really said nah 💀",
+      "no is cooked, it's over for no",
+      "ok this is embarrassing for you now"
+    ],
+    finalTitle:"no logged off.",
+    finalHint:"just tap yes 😭",
+    onYes(){
+      loveStage.classList.add('hidden');
+      finalStage.classList.remove('hidden');
+    }
+  });
+</script>
+</body>
+</html>
